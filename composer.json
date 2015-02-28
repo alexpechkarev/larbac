@@ -1,0 +1,29 @@
+{
+	"name": "alexpechkarev/larbac",
+	"description": "Simple Role based access control for Laravel 5",
+	"keywords": ["role based access control", "access controll", "permissions", "role permission"],
+	"license": "MIT",
+        "authors": [
+            {
+                "name": "Alexander Pechkarev",
+                "email": "alexpechkarev@gmail.com"
+            }
+        ],    
+        "minimum-stability": "stable",
+	"require": {
+		"laravel/framework": "5.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Larbac\\": "src/"
+		}
+	},
+        
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+    
+	
+}
