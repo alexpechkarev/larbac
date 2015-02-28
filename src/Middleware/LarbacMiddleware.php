@@ -2,10 +2,9 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-#use Larbac\Facade\LarbacFacade as Larbac;
 use Illuminate\Support\Facades\URL;
 
-class LarbacMiddleaware {
+class LarbacMiddleware {
 
     	/**
 	 * The Guard implementation.
@@ -33,6 +32,7 @@ class LarbacMiddleaware {
 	{
 		$this->auth = $auth;
                 
+                
 	}
         /***/
         
@@ -48,13 +48,12 @@ class LarbacMiddleaware {
             
             /**
              * Get array of permissions to verify
-             * Permission::getPermission()  -retrive array of permissions set in controller
-             * $this->getVerify($request) - retrive array of permissions set in routes.php
              */
+           
             $verify = is_array( $request->route()->parameters('larbac') ) 
                                 ? $request->route()->parameters('larbac') 
                                 : $this->getVerify($request);
-            
+           
             
             /**
              *  is user is authenticated
@@ -72,12 +71,24 @@ class LarbacMiddleaware {
             
             
             /**
+             * Is larbac array given
+             */
+            if( !isset( $verify['larbac'] )){
+                
+                   return $this->getRidirect(); 
+            }
+            /***/
+            
+            
+            
+            
+            /**
              * Is user has a role
              */
-            if( isset( $verify['role'])){
+            if( isset( $verify['larbac']['role'])){
                 
-                 $this->valid = $this->auth->user()->hasRole( $verify['role'] );
-
+                 $this->valid = $this->auth->user()->hasRole( $verify['larbac']['role'] );
+                 
                  if(empty( $this->valid ) ){
                     return $this->getRidirect();
                  }
@@ -86,9 +97,9 @@ class LarbacMiddleaware {
             /**
              *  can user perform following tasks
              */
-            if( isset( $verify['permissions'])){      
+            if( isset( $verify['larbac']['permissions'])){      
                 
-                 $this->valid = $this->auth->user()->hasPermission( $verify['permissions'] );
+                 $this->valid = $this->auth->user()->hasPermission( $verify['larbac']['permissions'] );
 
                  if(empty( $this->valid ) ){
                     return $this->getRidirect();

@@ -32,30 +32,13 @@ class LarbacServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-            $this->app->bind('Larbac\Contracts\LarbacInterface', 'Larbac\Larbac');
-            
-            $this->app->bindShared('Larbac', function($app)
-            {
-                    return new \Larbac\Larbac;
-            });
-                
-            
-            $this->app->alias('Larbac', 'Larbac\Larbac');
+
             
 	}
         /***/
         
         
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array('larbac');
-	}
-        /***/
+
         
         
 

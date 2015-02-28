@@ -1,7 +1,7 @@
 <?php namespace Larbac\Models;
 
 
-class User extends App\User{
+class User extends \App\User{
 
     /**
      * Roles
@@ -34,10 +34,18 @@ class User extends App\User{
   
         $relations = $this->queryRelation();
         
+        $roles = $relations->roles()->first();
+        
+        // is role assigned to a user
+        if(empty($roles)){
+            
+            return false;
+        }
+        
         /*
          *  get current user roles
          */
-        $hasRole = $relations->roles()->first()->lists('name');
+        $hasRole = $roles->lists('name');
         
         /*
          *  intersect available and verified user roles
@@ -87,15 +95,22 @@ class User extends App\User{
          */
         $relations = $this->queryRelation();
         
+        
+        $roles = $relations->roles()->first();
+        
+        // is role assigned to a user
+        if(empty($roles)){
+            
+            return false;
+        }
+        
         /**
          *  get array of user granted permissions
          */
-        $userPermissions = $relations
-                                ->roles()
-                                ->first()
-                                ->permissions()
-                                ->first()
-                                ->lists('name');
+        $userPermissions = $roles
+                            ->permissions()
+                            ->first()
+                            ->lists('name');
         
         
         /**

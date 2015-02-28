@@ -20,11 +20,6 @@ providers:
     ...
     'Larbac\Provider\LarbacServiceProvider',
 
-
-aliases:
-    ...
-    'Larbac'=> 'Larbac\Facade\LarbacFacade',
-
 ```
 
 Before executing migrations please review migration file located in Migration folder of this package.
@@ -122,3 +117,4 @@ To assign access control to a route use following:
            
     ]}
 ```
+
