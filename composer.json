@@ -19,7 +19,7 @@
 		}
 	},
 	"scripts": {
-		"post-package-install": [
+		"post-create-project-cmd": [
                         "php -r \"copy('vendor/alexpechkarev/larbac/src/Migration/2015_02_25_100000_create_permission_tables.php', 'database/migrations/'.date('Y_m_d_His').'_create_permissions_tables.php');\""
 		]
 	},        
