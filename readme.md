@@ -10,7 +10,7 @@ Simple access control package for Laravel 5 based on the Role Based Access Contr
 Install package issuing [Composer](https://getcomposer.org/) command in terminal:
 
 ```sh
-$ composer require alexpechkarev/larbac : dev-master
+$ composer require alexpechkarev/larbac:dev-master
 ```
 
 Update provider and aliases arrays in config/app.php with:
@@ -50,41 +50,82 @@ Register package middleware with HTTP kernel route array
 
 
 ## Usage
-
+Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to those users.
 First create roles and permissions:
 
 ```
     /**
     * Creating role
     */
-    $role = new \Larbac\Models\Role::create(['name' => 'Admin']); // assuming role id will be 5
+    $role = Larbac\Models\Role::create(['name' => 'Admin']); // assuming role id will be 5
     
     // with optional role description 
-    $role = new \Larbac\Models\Role::create(['name' => 'Admin', 'description' => 'App administrator']);
+    $role = Larbac\Models\Role::create(['name' => 'Admin', 'description' => 'App administrator']);
 
     /**
     * Creating permission
     */
-    $permission = new \Larbac\Models\Permission::create(['name' => 'can_save']); // assuming permission id will be 12
+    $permission = Larbac\Models\Permission::create(['name' => 'can_save']); // assuming permission id will be 12
 
     // with optional permission description
-    $permission = new \Larbac\Models\Role::create(['name' => 'can_save', 'description' => 'Allow save changes']);
+    $permission = Larbac\Models\Role::create(['name' => 'can_save', 'description' => 'Allow save changes']);
 
 ```
 
-Next assign permission(s) to role and than role(s) to user:
+Next assign permission(s) to a Role:
 
 ```
     /*
     * Assigning permission(s) to a role
+    * 'Admin' role id = 5
+    * 'can_save' permission id = 12
     */
-    $role = \Larbac\Models\Role::find(5); // find Admin role by id - 5
+    $role = Larbac\Models\Role::find(5); // find Admin role by id - 5
     $role->permissions()->sync([12]); // Assign 'can_save',using permission id - 12
     
+```    
+
+
+Multiply permissions can also be assigned to a Role by supplying array of permission id's.
+To keep in mind that `sync( [12,13,14] )` will remove any other permissions that have been granted before and not specified in the given array.
+
+```
+
+    /**
+     * Assigning multiply permissions to a Role
+     * 
+     * 'Admin' role id = 5
+     * 
+     * 'can_save' id = 12
+     * 'can_view' id = 13
+     * 'can_edit' id = 14
+     */
+    $role = Larbac\Models\Role::find(1);
+    $role->permissions()->sync([12,13,14]);
+
+
+    ...
+
+    /**
+     * Will revoke 'can_view' id = 13 and only grant given permissions
+     * 
+     * 'Admin' role id = 5
+     * 
+     * 'can_save' id = 12
+     * 'can_edit' id = 14
+     */
+    $role->permissions()->sync( [12,14] );
+
+```
+
+
+Next assign a Role to an User:
+```
+
     /*
-    * Assigning role(s) to a user
+    * Assigning role to an user
     */
-    $user = \Larbac\Models\User::find(20); // assuming user id is 20
+    $user = Larbac\Models\User::find(20); // assuming user id is 20
     $user->roles()->sync([5]); // Assigning user [id = 20] an Admin role [id = 5]
 
 ```
@@ -100,7 +141,8 @@ To verify user permissions in the controller use following:
 
     public function __construct(){
 
-        Request::route()->setParameter('larbac', ['role'=>['Admin'], 'permissions' => ['can_save']  ]);
+        $permissions = ['role'=>['Admin'], 'permissions' => ['can_save']  ];
+        Request::route()->setParameter('larbac', $permissions);
         $this->middleware('larbac');
 
     }
@@ -111,10 +153,11 @@ To verify user permissions in the controller use following:
 To assign access control to a route use following:
 
 ```
-    Route::get('/post', ['middleware' => 'larbac', 'larbac' => ['role'=>['Admin'], 'permissions' => ['can_save']  ],function(){
+    Route::get('/post', 
+    ['middleware' => 'larbac', 'larbac' => ['role'=>['Admin'], 'permissions' => ['can_save']  ],function(){
      
            return view('post_view');
            
-    ]}
+    }]);
 ```
 

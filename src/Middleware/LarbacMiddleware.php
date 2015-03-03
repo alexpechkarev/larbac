@@ -49,12 +49,14 @@ class LarbacMiddleware {
             /**
              * Get array of permissions to verify
              */
+            
            
             $verify = is_array( $request->route()->parameters('larbac') ) 
+                        && count( $request->route()->parameters('larbac')) > 0
                                 ? $request->route()->parameters('larbac') 
                                 : $this->getVerify($request);
            
-            
+       
             /**
              *  is user is authenticated
              */
@@ -69,7 +71,8 @@ class LarbacMiddleware {
                                  ->withErrors( ['message' => 'Only authenticated users allowed']);
             }
             
-            
+             
+               
             /**
              * Is larbac array given
              */
@@ -80,13 +83,13 @@ class LarbacMiddleware {
             /***/
             
             
-            
+        
             
             /**
              * Is user has a role
              */
             if( isset( $verify['larbac']['role'])){
-                
+               
                  $this->valid = $this->auth->user()->hasRole( $verify['larbac']['role'] );
                  
                  if(empty( $this->valid ) ){
@@ -126,14 +129,17 @@ class LarbacMiddleware {
              * 
              *  Solution is to logout user
              * 
-             */              
+             * @todo - add redirect as parameter
+             */             
+                 
                                      
-                if( ends_with( URL::previous(), 'auth/logout') ) {
+                if( ends_with( URL::previous(), 'auth/login') ) {
                     
                     $this->auth->logout();
                     return redirect()->to('auth/login')->withErrors( ['message' => 'Invalid permissions']);
                 }
                 
+
                 return redirect()->back()->withErrors( ['message' => 'Invalid permissions']);
                 
                 /***/
@@ -153,8 +159,8 @@ class LarbacMiddleware {
         private function getVerify($request){
             
             $actions = $request->route()->getAction();
- 
-            return $actions['verify'];
+            
+            return $actions;
         }
         /***/
 
