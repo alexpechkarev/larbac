@@ -1,5 +1,5 @@
 # LARBAC
-Simple access control package for Laravel 5 based on the Role Based Access Control model.
+Simple access control package for Laravel 5 based on the RBAC model.
 
 
 ## Requirements
