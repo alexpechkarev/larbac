@@ -167,13 +167,12 @@ To assign access control to a route use following:
 
 Support
 -------
-
-[Discovered an error or would like to suggest an improvement please do email me or open an issue on GitHub](https://github.com/alexpechkarev/larbac/issues)
+Discovered an error or would like to suggest an improvement ? Please do email me or open an [issue on GitHub](https://github.com/alexpechkarev/larbac/issues)
 
 
 License
 -------
 
 Larbac for Laravel 5 is released under the MIT License. See the bundled
-[LICENSE](https://github.com/alexpechkarev/larbac/LICENSE)
+[LICENSE](https://github.com/alexpechkarev/larbac/blob/master/LICENSE)
 file for details.
