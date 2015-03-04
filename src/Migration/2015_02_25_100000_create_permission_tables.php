@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+#use Illuminate\Support\Facades\Config;
 
 class CreatePermissionTables extends Migration {
     
@@ -17,7 +18,7 @@ class CreatePermissionTables extends Migration {
      */
     public function __construct()
     {
-        $this->tablePrefix = 'tbl_';
+        $this->tablePrefix = config('larbac.tablePrefix');
     }
     /***/
     
@@ -34,7 +35,7 @@ class CreatePermissionTables extends Migration {
             $tablePrefix = $this->tablePrefix;
         
             // Creating permissions table
-           Schema::create($tablePrefix.'permissions', function(Blueprint $table)
+           Schema::create($tablePrefix.config('larbac.tables.permissionTable'), function(Blueprint $table)
            {
                $table->engine = 'InnoDB';
 
@@ -45,7 +46,7 @@ class CreatePermissionTables extends Migration {
            });
 
            // Creating roles table
-           Schema::create($tablePrefix.'roles', function($table)
+           Schema::create($tablePrefix.config('larbac.tables.roleTable'), function($table)
            {
                $table->engine = 'InnoDB';
 
@@ -57,7 +58,7 @@ class CreatePermissionTables extends Migration {
 
 
            // Creating  role to user relations table
-           Schema::create($tablePrefix.'role_user', function($table) use ($tablePrefix)
+           Schema::create($tablePrefix.config('larbac.tables.roleToUserTable'), function($table) use ($tablePrefix)
            {
                $table->engine = 'InnoDB';
 
@@ -70,7 +71,7 @@ class CreatePermissionTables extends Migration {
            });
 
            // Creating permissions to roles relations table
-           Schema::create($tablePrefix.'permission_role', function($table) use ($tablePrefix)
+           Schema::create($tablePrefix.config('larbac.tables.permissionToRoleTable'), function($table) use ($tablePrefix)
            {
                $table->engine = 'InnoDB';
 
@@ -90,10 +91,10 @@ class CreatePermissionTables extends Migration {
 	 */
 	public function down()
 	{
-	    Schema::drop($this->tablePrefix.'role_user');
-            Schema::drop($this->pretablePrefixfix.'permission_role');
-            Schema::drop($this->tablePrefix.'roles');
-            Schema::drop($this->prtablePrefixefix.'permissions');
+	    Schema::drop($this->tablePrefix.config('larbac.tables.roleToUserTable'));
+            Schema::drop($this->tablePrefix.config('larbac.tables.permissionToRoleTable'));
+            Schema::drop($this->tablePrefix.config('larbac.tables.roleTable'));
+            Schema::drop($this->tablePrefix.config('larbac.tables.permissionTable'));
 	}
 
 }

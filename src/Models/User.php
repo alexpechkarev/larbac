@@ -2,6 +2,8 @@
 
 
 class User extends \App\User{
+       
+    
 
     /**
      * Roles
@@ -10,7 +12,8 @@ class User extends \App\User{
      */
     public function roles()
     {
-        return $this->belongsToMany("Larbac\Models\Role",'tbl_role_user')->withTimestamps();
+        $table = config('larbac.tablePrefix').config('larbac.tables.roleToUserTable');
+        return $this->belongsToMany("Larbac\Models\Role",$table)->withTimestamps();
     }
 
 
@@ -23,7 +26,7 @@ class User extends \App\User{
      */
     public function hasRole($checkRoles = 'none')
     {
-        
+       
         /**
          *  is array given? 
          *  cast variable to an array type

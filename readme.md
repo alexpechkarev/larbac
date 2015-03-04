@@ -49,6 +49,10 @@ Register package middleware with HTTP kernel route array
 	];
 
 
+## Config
+
+
+
 ## Usage
 Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to those users.
 First create roles and permissions:
@@ -161,3 +165,15 @@ To assign access control to a route use following:
     }]);
 ```
 
+Support
+-------
+
+[Discovered an error or would like to suggest an improvement please do email me or open an issue on GitHub](https://github.com/alexpechkarev/larbac/issues)
+
+
+License
+-------
+
+Larbac for Laravel 5 is released under the MIT License. See the bundled
+[LICENSE](https://github.com/alexpechkarev/larbac/LICENSE)
+file for details.

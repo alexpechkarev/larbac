@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Role extends Model {
 
 	/**
@@ -9,7 +10,7 @@ class Role extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'tbl_roles';
+	protected $table;
 
 	/**
 	 * The attributes that are mass assignable.
@@ -25,27 +26,39 @@ class Role extends Model {
 	 */
 	protected $hidden = [];
 
+        
+        /**
+         * Initialize table name
+         */
+        public function __construct() {
+            
+            $this->table = config('larbac.tablePrefix').config('larbac.tables.roleTable');
+            parent::__construct();
+        }
+        /***/        
 
 
-    /**
-     * Relation to User model
-     *
-     * @return object
-     */
-    public function users()
-    {
-        return $this->belongsToMany("Larbac\Models\User",'tbl_role_user')->withTimestamps();
-    }
+        /**
+         * Relation to User model
+         *
+         * @return object
+         */
+        public function users()
+        {
+            $table = config('larbac.tablePrefix').config('larbac.tables.roleToUserTable');
+            return $this->belongsToMany("Larbac\Models\User",$table)->withTimestamps();
+        }
 
-    /**
-     * Relation to Permission model
-     *
-     * @return object
-     */
-    public function permissions()
-    {
-        return $this->belongsToMany("Larbac\Models\Permission",'tbl_permission_role')->withTimestamps();
-    }
+        /**
+         * Relation to Permission model
+         *
+         * @return object
+         */
+        public function permissions()
+        {
+            $table = config('larbac.tablePrefix').config('larbac.tables.permissionToRoleTable');
+            return $this->belongsToMany("Larbac\Models\Permission",$table)->withTimestamps();
+        }
 
 
 }

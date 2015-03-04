@@ -21,7 +21,8 @@ class LarbacServiceProvider extends ServiceProvider {
 	public function boot()
 	{
             $this->publishes([
-                 __DIR__.'/../Migration' => base_path('database/migrations/')
+                 __DIR__.'/../Migration'    => base_path('database/migrations/'),
+                 __DIR__.'/../Config'       => config_path('/'),
              ]);
 	}
 

@@ -3,6 +3,8 @@
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Routing\UrlGenerator;
+
 
 class LarbacMiddleware {
 
@@ -21,6 +23,13 @@ class LarbacMiddleware {
          */
         protected $valid = false;
         
+        
+        /**
+         * UrlGenerator
+         * 
+         */
+        protected $url;        
+        
 
 	/**
 	 * Create a new filter instance.
@@ -28,9 +37,11 @@ class LarbacMiddleware {
 	 * @param  Guard  $auth
 	 * @return void
 	 */
-	public function __construct(Guard $auth)
+	public function __construct(Guard $auth, UrlGenerator $url)
 	{
 		$this->auth = $auth;
+                $this->url  = $url;
+                
                 
                 
 	}
@@ -43,14 +54,13 @@ class LarbacMiddleware {
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next)
+	public function handle($request, Closure $next )
 	{
             
             /**
              * Get array of permissions to verify
              */
-            
-           
+
             $verify = is_array( $request->route()->parameters('larbac') ) 
                         && count( $request->route()->parameters('larbac')) > 0
                                 ? $request->route()->parameters('larbac') 
@@ -61,17 +71,17 @@ class LarbacMiddleware {
              *  is user is authenticated
              */
             $this->valid = $this->auth->check();
-            
+          
             /**
              * User not authenticated 
              */
             if( empty($this->valid) ){
                 
                 return redirect()->to('auth/login')
-                                 ->withErrors( ['message' => 'Only authenticated users allowed']);
+                                 ->withErrors( ['message' => config('larbac.messages.notAuthorized') ]);
             }
             
-             
+               
                
             /**
              * Is larbac array given
@@ -82,7 +92,7 @@ class LarbacMiddleware {
             }
             /***/
             
-            
+
         
             
             /**
@@ -136,11 +146,23 @@ class LarbacMiddleware {
                 if( ends_with( URL::previous(), 'auth/login') ) {
                     
                     $this->auth->logout();
-                    return redirect()->to('auth/login')->withErrors( ['message' => 'Invalid permissions']);
+                    return redirect()->to(config('larbac.redirect.logIn'))
+                            ->withErrors( ['message' => config('larbac.messages.invalidPermission')]);
+                }
+                
+                
+                /**
+                 * Is Redirect Loop
+                 */
+                if( !strcmp( $this->url->current(), $this->url->previous() )  ){
+                    
+                    return redirect()->to(config('larbac.redirect.home'))
+                            ->withErrors( ['message' => config('larbac.messages.invalidPermission')]);
                 }
                 
 
-                return redirect()->back()->withErrors( ['message' => 'Invalid permissions']);
+                return redirect()->back()
+                        ->withErrors( ['message' => config('larbac.messages.invalidPermission')]);
                 
                 /***/
           
