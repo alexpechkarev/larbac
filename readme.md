@@ -50,8 +50,8 @@ Package extends default Laravel Authentication Model by defining table relations
 Update config/auth.php
 
 ```
-	#'model' => 'App\User',
-        'model' => 'Larbac\Models\User',
+    #'model' => 'App\User',
+    'model' => 'Larbac\Models\User',
 ```
 
 Register package middleware with HTTP kernel route array
@@ -84,7 +84,7 @@ This will allow front-end interface templates to add additional resources as and
         @show  
 
 ```
-#How to use wit front-end
+#How to use with front-end
 ............
 to be updated
 
