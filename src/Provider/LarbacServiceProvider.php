@@ -20,10 +20,16 @@ class LarbacServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+            $this->loadViewsFrom(__DIR__.'/../Assets/views/', 'larbac');                
+            
             $this->publishes([
                  __DIR__.'/../Migration'    => base_path('database/migrations/'),
                  __DIR__.'/../Config'       => config_path('/'),
+                __DIR__.'/../Assets/js'        => public_path('vendor/larbac/js'),
+                __DIR__.'/../Assets/css'        => public_path('vendor/larbac/css')
              ]);
+            
+            include __DIR__.'/../Routes/routes.php';            
 	}
 
 	/**

@@ -51,7 +51,9 @@ Register package middleware with HTTP kernel route array
 
 ## Config
 
+## Front End
 
+resources views app.blade.php wrap jquery an bootstrap js with footer
 
 ## Usage
 Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to those users.
