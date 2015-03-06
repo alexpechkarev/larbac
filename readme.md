@@ -15,9 +15,9 @@ Todo:
 
 ## Front-end dependency
 
-    - [jQuery](http://jquery.com/) 
-    - [Bootstrap](http://getbootstrap.com/) 
-    - [Dual listbox](http://www.virtuosoft.eu/code/bootstrap-duallistbox)
+- [jQuery](http://jquery.com/) 
+- [Bootstrap](http://getbootstrap.com/) 
+- [Dual listbox](http://www.virtuosoft.eu/code/bootstrap-duallistbox)
 
 ## Installation
 Install package issuing [Composer](https://getcomposer.org/) command in terminal:
