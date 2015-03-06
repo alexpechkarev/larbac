@@ -1,10 +1,23 @@
 # LARBAC
 Role based access control package for Laravel 5.
+Intentions of this package is to apply RBAC abstraction level to promote secure user administration.
+Access decisions are based on the roles and permissions individual users have as part of organization. The basic concept is that users obtain permissions by being member of role, where permissions are assigned to roles and roles assigned to users. User-role and permission-role have many-to-many relation, allowing single role have many users and single user have many roles, same applies to permissions. This package allows access validation based on roles, permissions or both.
+
+Todo: 
+    - web interface to manege roles/permissions and assign to user - added/ testing
+    - modify config file allowing setting controller routes 
+    - update readme
 
 
 ## Requirements
 
 - [Laravel 5] (http://laravel.com/)
+
+## Front-end dependency
+
+    - [jQuery](http://jquery.com/) 
+    - [Bootstrap](http://getbootstrap.com/) 
+    - [Dual listbox](http://www.virtuosoft.eu/code/bootstrap-duallistbox)
 
 ## Installation
 Install package issuing [Composer](https://getcomposer.org/) command in terminal:
@@ -51,9 +64,31 @@ Register package middleware with HTTP kernel route array
 
 ## Config
 
-## Front End
+........... this need updating
+ - Front-end resource paths
+ - Front-end routes configuration
 
-resources views app.blade.php wrap jquery an bootstrap js with footer
+
+## Front-end interface
+
+Important change when/if using front-end interface in default template layout or 
+`resources/views/app.blade.php` in your own layout template wrap [jQuery](http://jquery.com/) and [Bootstrap](http://getbootstrap.com/) in `@section('footer-js') ... @show`.
+
+This will allow front-end interface templates to add additional resources as and when needed.
+
+```
+        @section('footer-js')
+	<!-- Scripts -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        @show  
+
+```
+#How to use wit front-end
+............
+to be updated
+
+# How to use without front-end
 
 ## Usage
 Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to those users.
@@ -165,15 +200,19 @@ To assign access control to a route use following:
            return view('post_view');
            
     }]);
+
 ```
 
-Support
--------
+
+##What next
+Write about how this package can be extended ...
+
+##Support
+
 Discovered an error or would like to suggest an improvement ? Please do email me or open an [issue on GitHub](https://github.com/alexpechkarev/larbac/issues)
 
 
-License
--------
+##License
 
 Larbac for Laravel 5 is released under the MIT License. See the bundled
 [LICENSE](https://github.com/alexpechkarev/larbac/blob/master/LICENSE)
