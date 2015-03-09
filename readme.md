@@ -123,25 +123,9 @@ To inject `javascript` dependency resources into interface templates make sure t
 
 ## Front-end screen shots
 
-### Roles
-
-Create new role: /role/create
-
-![Screenshot](src/img/role_create.png?raw=true "Create new role: http://mydomain.net/role/create")
-
-View roles: /role
-
-![Screenshot](src/img/role_view.png?raw=true "View roles: http://mydomain.net/role")
-
-
-Edit role: /role/1/edit/
-
-![Screenshot](src/img/role_edit.png?raw=true "Edit role: http://mydomain.net/role/1/edit")
-
-
 ### Permissions
 
-Create new permission and assign permission: /permission/create
+Create new permission: /permission/create
 
 ![Screenshot](src/img/permission_create.png?raw=true "Create new permission: http://mydomain.net/permission/create")
 
@@ -158,6 +142,23 @@ Edit permission: /permission/1/edit/
 Delet permission: 
 
 ![Screenshot](src/img/permission_delete.png?raw=true "Delete permission")
+
+
+### Roles
+
+Create new role and assign permission: /role/create
+
+![Screenshot](src/img/role_create.png?raw=true "Create new role: http://mydomain.net/role/create")
+
+View roles: /role
+
+![Screenshot](src/img/role_view.png?raw=true "View roles: http://mydomain.net/role")
+
+
+Edit role: /role/1/edit/
+
+![Screenshot](src/img/role_edit.png?raw=true "Edit role: http://mydomain.net/role/1/edit")
+
 
 
 ### Users
