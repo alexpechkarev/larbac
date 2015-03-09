@@ -122,7 +122,55 @@ To inject `javascript` dependency resources into interface templates make sure t
 
 
 ## Front-end screen shots
-![Screenshot](src/img/role_create.png?raw=true "Create new role: http://mydomain.net/roles/create")
+
+### Roles
+
+Create new role: /role/create
+
+![Screenshot](src/img/role_create.png?raw=true "Create new role: http://mydomain.net/role/create")
+
+View roles: /role
+
+![Screenshot](src/img/role_view.png?raw=true "View roles: http://mydomain.net/role")
+
+
+Edit role: /role/1/edit/
+
+![Screenshot](src/img/role_edit.png?raw=true "Edit role: http://mydomain.net/role/1/edit")
+
+
+### Permissions
+
+Create new permission and assign permission: /permission/create
+
+![Screenshot](src/img/permission_create.png?raw=true "Create new permission: http://mydomain.net/permission/create")
+
+View permissions: /permission
+
+![Screenshot](src/img/permission_view.png?raw=true "View roles: http://mydomain.net/permission")
+
+
+Edit permission: /permission/1/edit/
+
+![Screenshot](src/img/permission_edit.png?raw=true "Edit permission: http://mydomain.net/permission/1/edit")
+
+
+Delet permission: 
+
+![Screenshot](src/img/permission_delete.png?raw=true "Delete permission")
+
+
+### Users
+
+View users: /user
+
+![Screenshot](src/img/user_view.png?raw=true "View users: http://mydomain.net/user")
+
+
+Assign role to user: /user/1/edit/
+
+![Screenshot](src/img/user_assign.png?raw=true "Assign role to user: http://mydomain.net/user/1/edit")
+
 
 ## Using without front-end
 
@@ -238,9 +286,6 @@ To assign access control to a route use following:
 
 ```
 
-
-##What next
-Write about how this package can be extended ...
 
 ##Support
 
