@@ -5,7 +5,7 @@ Role based access control package for Laravel 5.
 Intentions of this package is to apply RBAC abstraction level to promote secure user administration.
 Access decisions are based on the roles and permissions individual users have as part of organization. The basic concept is that users obtain permissions by being member of role, where permissions are assigned to roles and roles assigned to users. User-role and permission-role have many-to-many relation, allowing single role have many users and single user have many roles, same applies to permissions. 
 
-This package includes front-end interface that allows: 
+This package includes frontend interface that allows: 
 
  - create, edit and delete permissions
  - create, edit and delete roles
@@ -84,7 +84,7 @@ Reviewing database table names in config file and change any if necessary, than 
 
 ```
 
-By default frontend interface set to `true`. To access management interfaces use following URL's:
+By default frontend interface set to `true`. These are default URL's:
 
 ```
     |   User interface can be accessed via          - http://yourdomain.net/user
@@ -106,7 +106,7 @@ Routes defined in config file and can be modified at any time.
 ```
 
 
-### Front-end interface
+### Frontend interface
 
 To inject `javascript` dependency resources into interface templates make sure that default layout template `resources/views/app.blade.php` or your own template have following section: `@section('footer-js') ... @show`.
 
@@ -121,7 +121,7 @@ To inject `javascript` dependency resources into interface templates make sure t
 ```
 
 
-## Front-end screen shots
+## Frontend screen shots
 
 ### Permissions
 
@@ -173,7 +173,7 @@ Assign role to user: /user/1/edit/
 ![Screenshot](src/img/user_assign.png?raw=true "Assign role to user: http://mydomain.net/user/1/edit")
 
 
-## Using without front-end
+## Using without frontend
 
 Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to those users.
 First create roles and permissions:
