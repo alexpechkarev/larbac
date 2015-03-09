@@ -2,25 +2,23 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Package Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Package routes registered below, actual routes specified in config file.
 |
 */
 
-    Route::resource('user'
+    Route::resource(config('larbac.routes.routeUser')
                         ,'Larbac\Controllers\UserController'
                         ,[ 'only' => ['index', 'edit', 'update'] ]
                     );
     
-    Route::resource('permission'
+    Route::resource(config('larbac.routes.routePermission')
                         ,'Larbac\Controllers\PermissionController'
                         ,array('except' => array('show')));
     
-    Route::resource('roles'
+    Route::resource(config('larbac.routes.routeRoles')
                          ,'Larbac\Controllers\RoleController'
                          ,[ 'except' => ['show'] ]
                     );  

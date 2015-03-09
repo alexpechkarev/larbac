@@ -1,12 +1,18 @@
 # LARBAC
-Role based access control package for Laravel 5.
-Intentions of this package is to apply RBAC abstraction level to promote secure user administration.
-Access decisions are based on the roles and permissions individual users have as part of organization. The basic concept is that users obtain permissions by being member of role, where permissions are assigned to roles and roles assigned to users. User-role and permission-role have many-to-many relation, allowing single role have many users and single user have many roles, same applies to permissions. This package allows access validation based on roles, permissions or both.
 
-Todo: 
-    - web interface to manege roles/permissions and assign to user - added/ testing
-    - modify config file allowing setting controller routes 
-    - update readme
+Role based access control package for Laravel 5.
+
+Intentions of this package is to apply RBAC abstraction level to promote secure user administration.
+Access decisions are based on the roles and permissions individual users have as part of organization. The basic concept is that users obtain permissions by being member of role, where permissions are assigned to roles and roles assigned to users. User-role and permission-role have many-to-many relation, allowing single role have many users and single user have many roles, same applies to permissions. 
+
+This package includes front-end interface that allows: 
+
+ - create, edit and delete permissions
+ - create, edit and delete roles
+ - assign permissions to roles
+ - assign roles to users
+
+By default frontend option is set to `true`, if you wish to create roles and assign permissions in your own way simply turn this option off in configuration file of this package.
 
 
 ## Requirements
@@ -36,13 +42,11 @@ providers:
 ```
 
 Before executing migrations please review migration file located in Migration folder of this package.
-Four tables will be created with prefix tbl_ [ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]
-Publish and run package migrations issue following commands:
+Four tables will be created with prefix tbl_ `[ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]`
+Publish package assets:
 
 ```
     php artisan vendor:publish
-
-    php artisan migrate
 
 ```
 
@@ -51,7 +55,7 @@ Update config/auth.php
 
 ```
     #'model' => 'App\User',
-    'model' => 'Larbac\Models\User',
+    'model'  => 'Larbac\Models\User',
 ```
 
 Register package middleware with HTTP kernel route array
@@ -64,17 +68,48 @@ Register package middleware with HTTP kernel route array
 
 ## Config
 
-........... this need updating
- - Front-end resource paths
- - Front-end routes configuration
+After publishing package assets configuration file will be located in 
+
+```
+    config/larbac.php
+
+```
+
+## Create database tables
+
+Reviewing database table names in config file and change any if necessary, than run the migration: 
+
+```
+    php artisan migrate
+
+```
+
+By default frontend interface set to `true`. To access management interfaces use following URL's:
+
+```
+    |   User interface can be accessed via          - http://yourdomain.net/user
+    |   Permission interface can be accessed via    - http://yourdomain.net/permission
+    |   Roles interface can be accessed via         - http://yourdomain.net/roles
+
+```
+
+Routes defined in config file and can be modified at any time.
+ 
+```
+	'routes' => [
+            
+            'routeUser'       => 'user', 
+            'routePermission' => 'permission', 
+            'routeRoles'      => 'roles' 
+        ],
+
+```
 
 
-## Front-end interface
+### Front-end interface
 
-Important change when/if using front-end interface in default template layout or 
-`resources/views/app.blade.php` in your own layout template wrap [jQuery](http://jquery.com/) and [Bootstrap](http://getbootstrap.com/) in `@section('footer-js') ... @show`.
+To inject `javascript` dependency resources into interface templates make sure that default layout template `resources/views/app.blade.php` or your own template have following section: `@section('footer-js') ... @show`.
 
-This will allow front-end interface templates to add additional resources as and when needed.
 
 ```
         @section('footer-js')
@@ -84,6 +119,8 @@ This will allow front-end interface templates to add additional resources as and
         @show  
 
 ```
+
+
 #How to use with front-end
 ............
 to be updated

@@ -29,6 +29,37 @@ return [
             'permissionToRoleTable' => 'permission_role'
             
         ],
+    
+	/*
+	|--------------------------------------------------------------------------
+	| Enable frontend
+	|--------------------------------------------------------------------------
+	|
+	| Default true
+	|
+	*/
+
+	'frontend' => true,  
+    
+	/*
+	|--------------------------------------------------------------------------
+	| Routes
+	|--------------------------------------------------------------------------
+	|
+        | Default routes bellow mapping to controllers
+        |
+        |   User interface can be accessed via          - http://yourdomain.net/user
+        |   Permission interface can be accessed via    - http://yourdomain.net/permission
+        |   Roles interface can be accessed via         - http://yourdomain.net/roles
+	|
+	*/
+
+	'routes' => [
+            
+            'routeUser'       => 'user', 
+            'routePermission' => 'permission', 
+            'routeRoles'      => 'roles' 
+        ],
 
 	/*
 	|--------------------------------------------------------------------------
