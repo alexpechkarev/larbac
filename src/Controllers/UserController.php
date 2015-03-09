@@ -82,7 +82,7 @@ class UserController extends Controller{
             // asign roles
             $user->roles()->sync($roles);            
                 
-            return redirect(route('user.index'));                
+            return redirect(route(config('larbac.routes.routeUser').'.index'));                
                 
 	}
         /***/

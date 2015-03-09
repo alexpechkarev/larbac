@@ -12,7 +12,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">User: {{$name}}</div>
     <div class="panel-body">
-        {!! Form::open(array('route' => array('user.update', $id), 'role' => 'form', 'method' => 'PUT')) !!}
+        {!! Form::open(array('route' => array(config('larbac.routes.routeUser').'.update', $id), 'role' => 'form', 'method' => 'PUT')) !!}
 
         
         <div class="form-group">

@@ -37,7 +37,9 @@ Update provider and aliases arrays in config/app.php with:
 ```
 providers:
     ...
+    'Illuminate\Html\HtmlServiceProvider',
     'Larbac\Provider\LarbacServiceProvider',
+
 
 ```
 
@@ -89,7 +91,7 @@ By default frontend interface set to `true`. These are default URL's:
 ```
     |   User interface can be accessed via          - http://yourdomain.net/user
     |   Permission interface can be accessed via    - http://yourdomain.net/permission
-    |   Roles interface can be accessed via         - http://yourdomain.net/roles
+    |   Roles interface can be accessed via         - http://yourdomain.net/role
 
 ```
 
@@ -100,10 +102,34 @@ Routes defined in config file and can be modified at any time.
             
             'routeUser'       => 'user', 
             'routePermission' => 'permission', 
-            'routeRoles'      => 'roles' 
+            'routeRoles'      => 'role' 
         ],
 
 ```
+
+
+## Use
+
+After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be specified with your controller:
+
+```
+	public function __construct()
+	{
+                // Setting role based access
+                $permissions = ['role'=>['Admin']  ];
+                
+
+                if( is_object(Request::route()) ) {
+                    
+                    Request::route()->setParameter('larbac', $permissions);
+                    $this->middleware('larbac');  
+                }
+	}
+
+```
+
+
+
 
 
 ### Frontend interface

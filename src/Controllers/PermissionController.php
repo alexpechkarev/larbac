@@ -63,7 +63,7 @@ class PermissionController extends Controller {
             $permission->description    = Request::get('description');
             $permission->save(); 
 
-            return redirect(route('permission.index'));
+            return redirect(route(config('larbac.routes.routePermission').'.index'));
 
 	}
         /***/
@@ -101,7 +101,7 @@ class PermissionController extends Controller {
             
             if( $p->update(Request::all()) ):
                 
-                return redirect(route('permission.index'));                
+                return redirect(route(config('larbac.routes.routePermission').'.index'));                
                     
             endif;
             
@@ -120,7 +120,7 @@ class PermissionController extends Controller {
             
             $p = Permission::findOrFail($id);   
             $p->delete();
-            return redirect(route('permission.index')); 
+            return redirect(route(config('larbac.routes.routePermission').'.index')); 
 	}
         /***/
 

@@ -52,7 +52,7 @@
                         {{"No role assigned to this user."}}
                         @endif
                     </td>
-                    <td class="col-xs-2"><a href="{{route('user.edit', $u->id)}}" class="btn btn-primary btn-sm ">Edit Roles</a></td>
+                    <td class="col-xs-2"><a href="{{route(config('larbac.routes.routeUser').'.edit', $u->id)}}" class="btn btn-primary btn-sm ">Edit Roles</a></td>
                                            
 
                 </tr>

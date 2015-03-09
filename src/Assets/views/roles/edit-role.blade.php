@@ -15,7 +15,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Editing roles</div>
     <div class="panel-body">
-        {!! Form::open(array('route' => array('roles.update', $id), 'role' => 'form', 'method' => 'PUT')) !!}
+        {!! Form::open(array('route' => array(config('larbac.routes.routeRoles').'.update', $id), 'role' => 'form', 'method' => 'PUT')) !!}
         <div class="form-group">
             <label for="name">Name</label>
             {!!Form::text('name', $name, 

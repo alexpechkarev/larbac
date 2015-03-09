@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-xs-10"><h3 class="panel-title">View roles</h3></div>
             <div class="col-xs-2">
-                <a href="{{route('roles.create')}}" class="btn btn-primary btn-sm pull-right">Create role</a>
+                <a href="{{route(config('larbac.routes.routeRoles').'.create')}}" class="btn btn-primary btn-sm pull-right">Create role</a>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
 
       
         @if(count($roles) == 0)
-        <p>You do not have any roles created. <a href="{{route('roles.create')}}" class="btn btn-primary btn-sm">Create role</a><p>
+        <p>You do not have any roles created. <a href="{{route(config('larbac.routes.routeRoles').'.create')}}" class="btn btn-primary btn-sm">Create role</a><p>
             @else
             
 <!--            Table view-->
@@ -40,10 +40,10 @@
                     <td class="col-xs-2">{{$r->name}}</td>
                     <td class="col-xs-5">{{$r->description}}</td>
                     <td class="col-xs-1">
-                        <a href="{{route('roles.edit', $r->id)}}" class="btn btn-primary btn-sm ">Edit</a>
+                        <a href="{{route(config('larbac.routes.routeRoles').'.edit', $r->id)}}" class="btn btn-primary btn-sm ">Edit</a>
                     </td>
                     <td class="col-xs-1">
-                        {!! Form::open(array('route' => array('roles.destroy', $r->id), 'method' => 'DELETE')) !!}
+                        {!! Form::open(array('route' => array(config('larbac.routes.routeRoles').'.destroy', $r->id), 'method' => 'DELETE')) !!}
                         <button class="btn btn-danger btn-sm btnDelete" type="submit" >Delete Role</button>
                         {!! Form::close() !!}                        
 

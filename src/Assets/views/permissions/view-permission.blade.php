@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-xs-10"><h3 class="panel-title">View permissions</h3></div>
             <div class="col-xs-2">
-                <a href="{{route('permission.create')}}" class="btn btn-primary btn-sm pull-right">Create permission</a>
+                <a href="{{route(config('larbac.routes.routePermission').'.create')}}" class="btn btn-primary btn-sm pull-right">Create permission</a>
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@
         
         
         @if(count($perms) == 0)
-        <p>You do not have any permissions. <a href="{{route('permission.create')}}" class="btn btn-primary btn-sm">Create permission</a><p>
+        <p>You do not have any permissions. <a href="{{route(config('larbac.routes.routePermission').'.create')}}" class="btn btn-primary btn-sm">Create permission</a><p>
             @else
 <!--            Table view begins-->
         <table class="table table-hover">
@@ -39,9 +39,9 @@
                     <td class="col-xs-1">{{$p->id}}</td>
                     <td class="col-xs-2">{{$p->name}}</td>
                     <td class="col-xs-7">{{$p->description}}</td>
-                    <td class="col-xs-1"><a href="{{route('permission.edit', $p->id)}}" class="btn btn-primary btn-sm ">Edit</a></td>
+                    <td class="col-xs-1"><a href="{{route(config('larbac.routes.routePermission').'.edit', $p->id)}}" class="btn btn-primary btn-sm ">Edit</a></td>
                     <td class="col-xs-1">
-                        {!! Form::open(array('route' => array('permission.destroy', $p->id), 'method' => 'DELETE')) !!}
+                        {!! Form::open(array('route' => array(config('larbac.routes.routePermission').'.destroy', $p->id), 'method' => 'DELETE')) !!}
                         <button class="btn btn-danger btn-sm btnDelete" type="submit" >Delete Permission</button>
                         {!! Form::close() !!}                        
 

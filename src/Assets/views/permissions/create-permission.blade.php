@@ -10,7 +10,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Create permission</div>
     <div class="panel-body">
-        {!! Form::open(array('route' => 'permission.store', "role"=>"form")) !!}
+        {!! Form::open(array('route' => config('larbac.routes.routePermission').'.store', "role"=>"form")) !!}
 
         
             <div class="form-group">

@@ -50,7 +50,7 @@ return [
         |
         |   User interface can be accessed via          - http://yourdomain.net/user
         |   Permission interface can be accessed via    - http://yourdomain.net/permission
-        |   Roles interface can be accessed via         - http://yourdomain.net/roles
+        |   Roles interface can be accessed via         - http://yourdomain.net/role
 	|
 	*/
 
@@ -58,7 +58,7 @@ return [
             
             'routeUser'       => 'user', 
             'routePermission' => 'permission', 
-            'routeRoles'      => 'roles' 
+            'routeRoles'      => 'role' 
         ],
 
 	/*

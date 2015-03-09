@@ -16,7 +16,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Create role</div>
     <div class="panel-body">
-        {!! Form::open(array('route' => 'roles.store', "role"=>"form")) !!}
+        {!! Form::open(array('route' => config('larbac.routes.routeRoles').'.store', "role"=>"form")) !!}
             <div class="form-group">
                 <label for="name">Role name</label>
                 {!!Form::text('name', null, array('class'=>'form-control', 'id'=>'name', 'placeholder'=>'Enter role name'))!!}

@@ -69,7 +69,7 @@ class RoleController extends Controller{
             $perms = is_array(Request::get('permissions')) ? Request::get('permissions') : [];
             $role->permissions()->sync($perms);
            
-            return redirect(route('roles.index'));
+            return redirect(route(config('larbac.routes.routeRoles').'.index'));
 
 	}
         /***/
@@ -117,7 +117,7 @@ class RoleController extends Controller{
                 $permissions = is_array(Request::get('permissions')) ? Request::get('permissions') : [];
                 $role->permissions()->sync($permissions);
                 
-                return redirect(route('roles.index'));                
+                return redirect(route(config('larbac.routes.routeRoles').'.index'));                
                 
                 
             endif;
@@ -145,7 +145,7 @@ class RoleController extends Controller{
                 
             endif;
             
-            return redirect(route('roles.index')); 
+            return redirect(route(config('larbac.routes.routeRoles').'.index')); 
 	}
         /***/
 

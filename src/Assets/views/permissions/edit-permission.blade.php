@@ -10,7 +10,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Edit permission</div>
     <div class="panel-body">
-        {!! Form::open(array('route' => array('permission.update', $id), 'role' => 'form', 'method' => 'PUT')) !!}      
+        {!! Form::open(array('route' => array(config('larbac.routes.routePermission').'.update', $id), 'role' => 'form', 'method' => 'PUT')) !!}      
         
             <div class="form-group">
                 <label for="name">Name</label>
