@@ -121,13 +121,11 @@ To inject `javascript` dependency resources into interface templates make sure t
 ```
 
 
-#How to use with front-end
-............
-to be updated
+## Front-end screen shots
+![Screenshot](src/img/role_create.png?raw=true "Create new role: http://mydomain.net/roles/create")
 
-# How to use without front-end
+## Using without front-end
 
-## Usage
 Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to those users.
 First create roles and permissions:
 
