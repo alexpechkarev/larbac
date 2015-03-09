@@ -108,9 +108,26 @@ Routes defined in config file and can be modified at any time.
 ```
 
 
+### Frontend interface
+
+To inject `javascript` dependency resources into interface templates make sure that default layout template `resources/views/app.blade.php` or your own template have following section: `@section('footer-js') ... @show`.
+
+
+```
+        @section('footer-js')
+	<!-- Scripts -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        @show  
+
+```
+
+
+
+
 ## Use
 
-After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be specified with your controller:
+After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be specified within your controller:
 
 ```
 	public function __construct()
@@ -128,24 +145,63 @@ After creating your permissions / roles, establishing relations between them and
 
 ```
 
+Varies restriction rules can be set by specifying array of roles, array of permissions or both.
 
-
-
-
-### Frontend interface
-
-To inject `javascript` dependency resources into interface templates make sure that default layout template `resources/views/app.blade.php` or your own template have following section: `@section('footer-js') ... @show`.
-
+Validating more than one role: 
+ - user must be assigned to one of the given roles
 
 ```
-        @section('footer-js')
-	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-        @show  
+    $permissions = ['role'=>['Admin', 'Staff']  ];
+    ....
 
 ```
 
+Validating more than one role along with permission:
+- user must be assigned to one of the given roles
+- at least one role must have given permission
+
+```
+    $permissions = ['role'=>['Admin', 'Staff'], 'permissions' => ['view']  ];
+    ....
+
+```
+
+Validating more than one role along with permission:
+- user must be assigned to one of the given roles
+- at least one role must have given permissions
+
+```
+    $permissions = ['role'=>['Admin', 'Staff'], 'permissions' => ['view', 'edit']  ];
+    ....
+
+```
+
+Permission based validation only:
+- user must have given permission
+
+```
+    $permissions = ['permissions' => ['edit']  ];
+    ....
+
+```
+
+Assigning access control in routes files:
+
+```
+    Route::get('/post', 
+                        [
+                            'middleware' => 'larbac', 
+                            'larbac' => [
+                                            'role'=>['Admin'], 
+                                            'permissions' => ['can_save']  
+                                        ],
+        function(){
+     
+           return view('welcome');
+           
+    }]);
+
+```
 
 ## Frontend screen shots
 
@@ -281,37 +337,6 @@ Next assign a Role to an User:
 
 ```
 
-User access can be verified based on the role, permission or both. Package middleware method can be called from controller constructor or individual controller methods.
-To verify user permissions in the controller use following:
-
-```
-    use Larbac\Larbac;
-    use \Illuminate\Support\Facades\Request;
-    
-    ...
-
-    public function __construct(){
-
-        $permissions = ['role'=>['Admin'], 'permissions' => ['can_save']  ];
-        Request::route()->setParameter('larbac', $permissions);
-        $this->middleware('larbac');
-
-    }
-```
-
-
-
-To assign access control to a route use following:
-
-```
-    Route::get('/post', 
-    ['middleware' => 'larbac', 'larbac' => ['role'=>['Admin'], 'permissions' => ['can_save']  ],function(){
-     
-           return view('post_view');
-           
-    }]);
-
-```
 
 
 ##Support

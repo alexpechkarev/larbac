@@ -37,7 +37,7 @@ class User extends \App\User{
   
         $relations = $this->queryRelation();
         
-        $roles = $relations->roles()->first();
+        $roles = $relations->roles()->get();
         
         // is role assigned to a user
         if(empty($roles)){
@@ -50,12 +50,14 @@ class User extends \App\User{
          */
         $hasRole = $roles->lists('name');
         
+        
+        
         /*
          *  intersect available and verified user roles
          */
-        $userRole = count( array_intersect( $hasRole, $checkRoles ) ) ;
-
-        return !empty($userRole);
+        $cntRole = count(array_intersect( $hasRole, $checkRoles ));
+        
+        return $cntRole == count($checkRoles);
     }
 
     /**
@@ -101,28 +103,36 @@ class User extends \App\User{
         
         $roles = $relations->roles()->first();
         
+        
         // is role assigned to a user
         if(empty($roles)){
             
             return false;
         }
         
+       
         /**
          *  get array of user granted permissions
          */
-        $userPermissions = $roles
-                            ->permissions()
-                            ->first()
-                            ->lists('name');
+        $permissions = $roles->permissions()->get();
+        
+        
+        // is permissions assigned to a role
+        if(empty($permissions)){
+            
+            return false;
+        }
+         
+        $userPermissions = $permissions->lists('name');
         
         
         /**
          *  intersect available and verified user permissions
          */
-        $userCan = count( array_intersect( $userPermissions, $hasPermissions ) ) ;
+        $cntUser = count( array_intersect( $userPermissions, $hasPermissions ) );
         
+        return $cntUser == count($hasPermissions);
         
-        return !empty($userCan);
 
     }
     /***/
