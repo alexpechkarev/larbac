@@ -18,6 +18,7 @@ By default frontend option is set to `true`, if you wish to create roles and ass
 ## Requirements
 
 - [Laravel 5] (http://laravel.com/)
+- [illuminate/html] (https://github.com/illuminate/html)
 
 ## Front-end dependency
 
