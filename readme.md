@@ -162,9 +162,12 @@ In cases when user do not have sufficient permissions to access requested resour
 
 ## Use
 
-After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be set within your controller:
+After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be set within your controller. 
 
 ```
+use Illuminate\Support\Facades\Request;
+
+...
 	public function __construct()
 	{
                 // Setting role based access

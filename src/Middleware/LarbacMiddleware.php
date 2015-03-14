@@ -147,7 +147,7 @@ class LarbacMiddleware {
                     
                     $this->auth->logout();
                     return redirect()->to(config('larbac.redirect.logIn'))
-                            ->withErrors( ['message' => config('larbac.messages.invalidPermission')]);
+                            ->withErrors( ['error' => config('larbac.messages.invalidPermission')]);
                 }
                 
                 
@@ -157,12 +157,12 @@ class LarbacMiddleware {
                 if( !strcmp( $this->url->current(), $this->url->previous() )  ){
                     
                     return redirect()->to(config('larbac.redirect.home'))
-                            ->withErrors( ['message' => config('larbac.messages.invalidPermission')]);
+                            ->withErrors( ['error' => config('larbac.messages.invalidPermission')]);
                 }
                 
 
                 return redirect()->back()
-                        ->withErrors( ['message' => config('larbac.messages.invalidPermission')]);
+                        ->withErrors( ['error' => config('larbac.messages.invalidPermission')]);
                 
                 /***/
           
