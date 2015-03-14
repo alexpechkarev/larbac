@@ -144,7 +144,7 @@ Package templates will be using ```@section('footer-js')``` adding required java
 
 ### Error messages
 
-In cases when user do not have sufficient permissions to access requested resource LaRBAC Middleware will use ``` withErrors()``` method to flash errors. To show error messages include following code in your view. Error messages can be specified in the configuration file.
+In cases when user do not have sufficient permissions to access requested resource LaRBAC Middleware will use ``` withErrors()``` method to flash errors. To show error messages create new view ```larbac-error.blade.php``` and include code below.  Than include this view in your templates ```@include('larbac-error')```. Error messages can be specified in the configuration file.
 
 ```
 
