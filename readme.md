@@ -1,4 +1,4 @@
-# LARBAC
+# LaRBAC
 
 Role based access control package for Laravel 5.
 
@@ -36,25 +36,29 @@ $ composer require alexpechkarev/larbac:dev-master
 Update provider and aliases arrays in config/app.php with:
 
 ```
-providers:
+'providers' => [
     ...
     'Illuminate\Html\HtmlServiceProvider',
     'Larbac\Provider\LarbacServiceProvider',
 
 
+'aliases' =>[
+            ...
+            'Form'      => 'Illuminate\Html\FormFacade',
+            'HTML'      => 'Illuminate\Html\HtmlFacade'
+
+
 ```
 
-Before executing migrations please review migration file located in Migration folder of this package.
-Four tables will be created with prefix tbl_ `[ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]`
-Publish package assets:
+Publish package assets: 
 
 ```
     php artisan vendor:publish
 
 ```
 
-Package extends default Laravel Authentication Model by defining table relations and validation methods. 
-Update config/auth.php
+Package extends default Laravel User Model by defining extra relations and validation methods. 
+Tell Laravel to use package User model instead of default Eloquent User model in ```config/auth.php```:
 
 ```
     #'model' => 'App\User',
@@ -69,36 +73,39 @@ Register package middleware with HTTP kernel route array
 	];
 
 
-## Config
-
-After publishing package assets configuration file will be located in 
-
-```
-    config/larbac.php
-
-```
-
-## Create database tables
-
-Reviewing database table names in config file and change any if necessary, than run the migration: 
+Create database tables
+Before running migrations please review table names in migration folder ``` vendor/alexpechkarev/larbac/src/Migration``` 
+Four additional tables required to store roles and permissions data along with relations data. 
+By default following tables will be created ```[ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]```          
+Table names and table prefix can be specified in configuration file ```config/larbac.php```
 
 ```
     php artisan migrate
 
 ```
 
-By default frontend interface set to `true`. These are default URL's:
+## Configuration
 
-```
-    |   User interface can be accessed via          - http://yourdomain.net/user
-    |   Permission interface can be accessed via    - http://yourdomain.net/permission
-    |   Roles interface can be accessed via         - http://yourdomain.net/role
+After publishing package assets configuration file can be found in ``` config/larbac.php ```
 
-```
 
-Routes defined in config file and can be modified at any time.
+By default frontend interface turned on, to turn this option off see configuration file. 
+Forntend interface URS's shown below, defined in configuration file and can be modified at any time.
  
 ```
+	/*
+	|--------------------------------------------------------------------------
+	| Routes
+	|--------------------------------------------------------------------------
+	|
+        | Mapping default routes to controllers
+        |
+        |   User interface can be accessed via          - http://yourdomain.net/user
+        |   Permission interface can be accessed via    - http://yourdomain.net/permission
+        |   Roles interface can be accessed via         - http://yourdomain.net/role
+	|
+	*/
+
 	'routes' => [
             
             'routeUser'       => 'user', 
@@ -111,7 +118,7 @@ Routes defined in config file and can be modified at any time.
 
 ### Frontend interface
 
-To inject `javascript` dependency resources into interface templates make sure that default layout template `resources/views/app.blade.php` or your own template have following section: `@section('footer-js') ... @show`.
+Frontend templates depend on additional resources such as Bootstrap, jQuery and Dual List. To add this resource into templates please ensure that default layout template [in this case - resources/views/app.blade.php ] have following section: ```@section('footer-js') ... @show``` .  
 
 
 ```
@@ -123,12 +130,27 @@ To inject `javascript` dependency resources into interface templates make sure t
 
 ```
 
+### Error messages
 
+In cases when user do not have sufficient permissions to access requested resource LaRBAC Middleware will use ``` withErrors()``` method to flash errors. To show error messages include following code in your view. Error messages can be specified in the configuration file.
+
+```
+
+        @if($errors->has("error"))        
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            {{$errors->first("error")}}
+        </div>
+        @endif
+
+```
 
 
 ## Use
 
-After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be specified within your controller:
+After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be set within your controller:
 
 ```
 	public function __construct()
@@ -169,7 +191,7 @@ Validating more than one role along with permission:
 
 Validating more than one role along with permission:
 - user must be assigned to one of the given roles
-- at least one role must have given permissions
+- at least one role must have all given permissions
 
 ```
     $permissions = ['role'=>['Admin', 'Staff'], 'permissions' => ['view', 'edit']  ];
@@ -208,7 +230,7 @@ Assigning access control in routes files:
 
 ### Permissions
 
-Create new permission: /permission/create
+Creating new permission: /permission/create
 
 ![Screenshot](src/img/permission_create.png?raw=true "Create new permission: http://mydomain.net/permission/create")
 
@@ -229,7 +251,7 @@ Delet permission:
 
 ### Roles
 
-Create new role and assign permission: /role/create
+Creating new role and assigning permission(s) to this role: /role/create
 
 ![Screenshot](src/img/role_create.png?raw=true "Create new role: http://mydomain.net/role/create")
 
@@ -258,7 +280,7 @@ Assign role to user: /user/1/edit/
 
 ## Using without frontend
 
-Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to those users.
+Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to users.
 First create roles and permissions:
 
 ```
@@ -347,6 +369,6 @@ Discovered an error or would like to suggest an improvement ? Please do email me
 
 ##License
 
-Larbac for Laravel 5 is released under the MIT License. See the bundled
+LaRBAC for Laravel 5 is released under the MIT License. See the bundled
 [LICENSE](https://github.com/alexpechkarev/larbac/blob/master/LICENSE)
 file for details.

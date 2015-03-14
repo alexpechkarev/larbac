@@ -46,7 +46,7 @@ return [
 	| Routes
 	|--------------------------------------------------------------------------
 	|
-        | Default routes bellow mapping to controllers
+        | Mapping default routes to controllers
         |
         |   User interface can be accessed via          - http://yourdomain.net/user
         |   Permission interface can be accessed via    - http://yourdomain.net/permission
