@@ -12,7 +12,7 @@ This package includes frontend interface that allows:
  - assign permissions to roles
  - assign roles to users
 
-By default frontend option is set to `true`, if you wish to create roles and assign permissions in your own way simply turn this option off in configuration file of this package.
+By default frontend option is set to `true`, if you wish to create roles and assign permissions in your own way simply turn this option off in configuration file.
 
 
 ## Requirements
@@ -20,7 +20,7 @@ By default frontend option is set to `true`, if you wish to create roles and ass
 - [Laravel 5] (http://laravel.com/)
 - [illuminate/html] (https://github.com/illuminate/html)
 
-## Front-end dependency
+## Frontend dependency
 
 - [jQuery](http://jquery.com/) 
 - [Bootstrap](http://getbootstrap.com/) 
@@ -43,9 +43,9 @@ Update provider and aliases arrays in config/app.php with:
 
 
 'aliases' =>[
-            ...
-            'Form'      => 'Illuminate\Html\FormFacade',
-            'HTML'      => 'Illuminate\Html\HtmlFacade'
+    ...
+    'Form'      => 'Illuminate\Html\FormFacade',
+    'HTML'      => 'Illuminate\Html\HtmlFacade'
 
 
 ```
@@ -73,9 +73,10 @@ Register package middleware with HTTP kernel route array
 	];
 
 
-Create database tables
+#### Create database tables
+
 Before running migrations please review table names in migration folder ``` vendor/alexpechkarev/larbac/src/Migration``` 
-Four additional tables required to store roles and permissions data along with relations data. 
+Four additional tables required to store roles and permissions data along with their relations data. 
 By default following tables will be created ```[ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]```          
 Table names and table prefix can be specified in configuration file ```config/larbac.php```
 
@@ -90,7 +91,7 @@ After publishing package assets configuration file can be found in ``` config/la
 
 
 By default frontend interface turned on, to turn this option off see configuration file. 
-Forntend interface URS's shown below, defined in configuration file and can be modified at any time.
+Forntend interface URL's shown below, defined in configuration file and can be modified at any time.
  
 ```
 	/*
@@ -98,7 +99,7 @@ Forntend interface URS's shown below, defined in configuration file and can be m
 	| Routes
 	|--------------------------------------------------------------------------
 	|
-        | Mapping default routes to controllers
+        | Setting default routes
         |
         |   User interface can be accessed via          - http://yourdomain.net/user
         |   Permission interface can be accessed via    - http://yourdomain.net/permission
@@ -127,6 +128,17 @@ Frontend templates depend on additional resources such as Bootstrap, jQuery and 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
         @show  
+
+```
+
+Package templates will be using ```@section('footer-js')``` adding required javascript files.
+
+```
+
+@section('footer-js')
+@parent
+    // template required resources
+@stop
 
 ```
 
