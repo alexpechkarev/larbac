@@ -15,7 +15,7 @@ This package includes frontend interface that allows:
 By default frontend option is set to `true`, if you wish to create roles and assign permissions in your own way simply turn this option off in configuration file.
 
 ## Demonstration
- - [Try this package demo](http://epos-app.eu1.frbit.net/)
+ - [ Try demo](http://larbac.ddns.net/)
 
 
 ## Requirements
