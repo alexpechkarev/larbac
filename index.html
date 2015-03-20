@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Larbac by alexpechkarev</title>
+    <title>LaRBAC by alexpechkarev</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -17,7 +17,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Larbac</h1>
+        <h1>LaRBAC</h1>
         <p>Role based access control package for Laravel 5</p>
         <p class="view"><a href="https://github.com/alexpechkarev/larbac">View the Project on GitHub <small>alexpechkarev/larbac</small></a></p>
         <ul>
@@ -81,7 +81,8 @@ Access decisions are based on the roles and permissions individual users have as
 
 <p>Update provider and aliases arrays in config/app.php with:</p>
 
-<pre><code>'providers' =&gt; [
+<pre><code>
+'providers' =&gt; [
     ...
     'Illuminate\Html\HtmlServiceProvider',
     'Larbac\Provider\LarbacServiceProvider',
@@ -104,15 +105,17 @@ Access decisions are based on the roles and permissions individual users have as
 <p>Package extends default Laravel User Model by defining extra relations and validation methods. 
 Tell Laravel to use package User model instead of default Eloquent User model in <code>config/auth.php</code>:</p>
 
-<pre><code>    #'model' =&gt; 'App\User',
-    'model'  =&gt; 'Larbac\Models\User',
+<pre><code>    
+#'model' =&gt; 'App\User',
+'model'  =&gt; 'Larbac\Models\User',
 </code></pre>
 
 <p>Register package middleware with HTTP kernel route array</p>
 
-<pre><code>protected $routeMiddleware = [
+<pre><code>
+protected $routeMiddleware = [
              ...
-            'larbac'  =&gt; 'Larbac\Middleware\LarbacMiddleware.php',
+    'larbac'  =&gt; 'Larbac\Middleware\LarbacMiddleware.php',
 ];
 </code></pre>
 
@@ -163,11 +166,12 @@ Forntend interface URL's shown below, defined in configuration file and can be m
 
 <p>Frontend templates depend on additional resources such as Bootstrap, jQuery and Dual List. To add this resource into templates please ensure that default layout template [in this case - resources/views/app.blade.php ] have following section: <code>@section('footer-js') ... @show</code> .  </p>
 
-<pre><code>        @section('footer-js')
+<pre><code>        
+@section('footer-js')
     &lt;!-- Scripts --&gt;
     &lt;script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"&gt;&lt;/script&gt;
     &lt;script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"&gt;&lt;/script&gt;
-        @show  
+@show  
 
 </code></pre>
 
@@ -187,14 +191,14 @@ Forntend interface URL's shown below, defined in configuration file and can be m
 <p>In cases when user do not have sufficient permissions to access requested resource LaRBAC Middleware will use <code>withErrors()</code> method to flash errors. To show error messages create new view <code>larbac-error.blade.php</code> and include code below.  Than include this view in your templates <code>@include('larbac-error')</code>. Error messages can be specified in the configuration file.</p>
 
 <pre><code>
-        @if($errors-&gt;has("error"))        
-        &lt;div class="alert alert-warning alert-dismissible" role="alert"&gt;
-            &lt;button type="button" class="close" data-dismiss="alert"&gt;
-                &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;span class="sr-only"&gt;Close&lt;/span&gt;
-            &lt;/button&gt;
-            {{$errors-&gt;first("error")}}
-        &lt;/div&gt;
-        @endif
+    @if($errors-&gt;has("error"))        
+    &lt;div class="alert alert-warning alert-dismissible" role="alert"&gt;
+        &lt;button type="button" class="close" data-dismiss="alert"&gt;
+            &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;span class="sr-only"&gt;Close&lt;/span&gt;
+        &lt;/button&gt;
+        {{$errors-&gt;first("error")}}
+    &lt;/div&gt;
+    @endif
 
 </code></pre>
 
@@ -206,18 +210,18 @@ Forntend interface URL's shown below, defined in configuration file and can be m
 <pre><code>use Illuminate\Support\Facades\Request;
 
 ...
-    public function __construct()
-    {
-                // Setting role based access
-                $permissions = ['role'=&gt;['Admin']  ];
+public function __construct()
+{
+    // Setting role based access
+    $permissions = ['role'=&gt;['Admin']  ];
 
 
-                if( is_object(Request::route()) ) {
+    if( is_object(Request::route()) ) {
 
-                    Request::route()-&gt;setParameter('larbac', $permissions);
-                    $this-&gt;middleware('larbac');  
-                }
+        Request::route()-&gt;setParameter('larbac', $permissions);
+        $this-&gt;middleware('larbac');  
     }
+}
 
 </code></pre>
 
@@ -271,68 +275,54 @@ Forntend interface URL's shown below, defined in configuration file and can be m
 
 <p>Assigning access control in routes files:</p>
 
-<pre><code>    Route::get('/post', 
-                        [
-                            'middleware' =&gt; 'larbac', 
-                            'larbac' =&gt; [
-                                            'role'=&gt;['Admin'], 
-                                            'permissions' =&gt; ['can_save']  
-                                        ],
-        function(){
+<pre><code>    
+Route::get('/post', 
+[
+    'middleware' =&gt; 'larbac', 
+    'larbac' =&gt; ['role'=&gt;['Admin'], 'permissions' =&gt; ['can_save']  ],
 
-           return view('welcome');
-
-    }]);
+function(){return view('welcome');}
+]);
 
 </code></pre>
 
-<h2>
 <a id="frontend-screen-shots" class="anchor" href="#frontend-screen-shots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frontend screen shots</h2>
 
 <h3>
 <a id="permissions" class="anchor" href="#permissions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Permissions</h3>
 
-<p>Creating new permission: /permission/create</p>
+<p>Create new permission: /permission/create  <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_create.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_create.png" alt=""></p>
 
-<p><img src="src/img/permission_create.png?raw=true" alt="Screenshot" title="Create new permission: http://mydomain.net/permission/create"></p>
+<p>View permissions: /permission   <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_view.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_view.png" alt=""></p>
 
-<p>View permissions: /permission</p>
+<p>Edit permission: /permission/1/edit/ <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_edit.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_edit.png" alt=""></p>
 
-<p><img src="src/img/permission_view.png?raw=true" alt="Screenshot" title="View roles: http://mydomain.net/permission"></p>
-
-<p>Edit permission: /permission/1/edit/</p>
-
-<p><img src="src/img/permission_edit.png?raw=true" alt="Screenshot" title="Edit permission: http://mydomain.net/permission/1/edit"></p>
-
-<p>Delet permission: </p>
-
-<p><img src="src/img/permission_delete.png?raw=true" alt="Screenshot" title="Delete permission"></p>
+<p>Delet permission: <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_delete.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_delete.png" alt=""></p>
 
 <h3>
 <a id="roles" class="anchor" href="#roles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roles</h3>
 
-<p>Creating new role and assigning permission(s) to this role: /role/create</p>
+<p>Create new role and assign permission: /role/create  <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_create.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_create.png" alt=""></p>
 
-<p><img src="src/img/role_create.png?raw=true" alt="Screenshot" title="Create new role: http://mydomain.net/role/create"></p>
+<p>View roles: /role <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_view.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_view.png" alt=""></p>
 
-<p>View roles: /role</p>
-
-<p><img src="src/img/role_view.png?raw=true" alt="Screenshot" title="View roles: http://mydomain.net/role"></p>
-
-<p>Edit role: /role/1/edit/</p>
-
-<p><img src="src/img/role_edit.png?raw=true" alt="Screenshot" title="Edit role: http://mydomain.net/role/1/edit"></p>
+<p>Edit role: /role/1/edit/  <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_edit.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_edit.png" alt=""></p>
 
 <h3>
 <a id="users" class="anchor" href="#users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Users</h3>
 
-<p>View users: /user</p>
+<p>View users: /user  <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/user_view.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/user_view.png" alt=""></p>
 
-<p><img src="src/img/user_view.png?raw=true" alt="Screenshot" title="View users: http://mydomain.net/user"></p>
-
-<p>Assign role to user: /user/1/edit/</p>
-
-<p><img src="src/img/user_assign.png?raw=true" alt="Screenshot" title="Assign role to user: http://mydomain.net/user/1/edit"></p>
+<p>Assign role to user: /user/1/edit/   <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/user_assign.png">[ view image ]</a><br>
+<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/user_assign.png" alt=""></p>
 
 <h2>
 <a id="using-without-frontend" class="anchor" href="#using-without-frontend" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using without frontend</h2>
@@ -340,33 +330,35 @@ Forntend interface URL's shown below, defined in configuration file and can be m
 <p>Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to users.
 First create roles and permissions:</p>
 
-<pre><code>    /**
-    * Creating role
-    */
-    $role = Larbac\Models\Role::create(['name' =&gt; 'Admin']); // assuming role id will be 5
+<pre><code>    
+/**
+* Creating role
+*/
+$role = Larbac\Models\Role::create(['name' =&gt; 'Admin']); // assuming role id will be 5
 
-    // with optional role description 
-    $role = Larbac\Models\Role::create(['name' =&gt; 'Admin', 'description' =&gt; 'App administrator']);
+// with optional role description 
+$role = Larbac\Models\Role::create(['name' =&gt; 'Admin', 'description' =&gt; 'App administrator']);
 
-    /**
-    * Creating permission
-    */
-    $permission = Larbac\Models\Permission::create(['name' =&gt; 'can_save']); // assuming permission id will be 12
+/**
+* Creating permission
+*/
+$permission = Larbac\Models\Permission::create(['name' =&gt; 'can_save']); // assuming permission id will be 12
 
-    // with optional permission description
-    $permission = Larbac\Models\Role::create(['name' =&gt; 'can_save', 'description' =&gt; 'Allow save changes']);
+// with optional permission description
+$permission = Larbac\Models\Role::create(['name' =&gt; 'can_save', 'description' =&gt; 'Allow save changes']);
 
 </code></pre>
 
 <p>Next assign permission(s) to a Role:</p>
 
-<pre><code>    /*
-    * Assigning permission(s) to a role
-    * 'Admin' role id = 5
-    * 'can_save' permission id = 12
-    */
-    $role = Larbac\Models\Role::find(5); // find Admin role by id - 5
-    $role-&gt;permissions()-&gt;sync([12]); // Assign 'can_save',using permission id - 12
+<pre><code>    
+/*
+* Assigning permission(s) to a role
+* 'Admin' role id = 5
+* 'can_save' permission id = 12
+*/
+$role = Larbac\Models\Role::find(5); // find Admin role by id - 5
+$role-&gt;permissions()-&gt;sync([12]); // Assign 'can_save',using permission id - 12
 
 </code></pre>
 
@@ -374,41 +366,41 @@ First create roles and permissions:</p>
 To keep in mind that <code>sync( [12,13,14] )</code> will remove any other permissions that have been granted before and not specified in the given array.</p>
 
 <pre><code>
-    /**
-     * Assigning multiply permissions to a Role
-     * 
-     * 'Admin' role id = 5
-     * 
-     * 'can_save' id = 12
-     * 'can_view' id = 13
-     * 'can_edit' id = 14
-     */
-    $role = Larbac\Models\Role::find(1);
-    $role-&gt;permissions()-&gt;sync([12,13,14]);
+/**
+ * Assigning multiply permissions to a Role
+ * 
+ * 'Admin' role id = 5
+ * 
+ * 'can_save' id = 12
+ * 'can_view' id = 13
+ * 'can_edit' id = 14
+ */
+$role = Larbac\Models\Role::find(1);
+$role-&gt;permissions()-&gt;sync([12,13,14]);
 
 
-    ...
+...
 
-    /**
-     * Will revoke 'can_view' id = 13 and only grant given permissions
-     * 
-     * 'Admin' role id = 5
-     * 
-     * 'can_save' id = 12
-     * 'can_edit' id = 14
-     */
-    $role-&gt;permissions()-&gt;sync( [12,14] );
+/**
+ * Will revoke 'can_view' id = 13 and only grant given permissions
+ * 
+ * 'Admin' role id = 5
+ * 
+ * 'can_save' id = 12
+ * 'can_edit' id = 14
+ */
+$role-&gt;permissions()-&gt;sync( [12,14] );
 
 </code></pre>
 
 <p>Next assign a Role to an User:</p>
 
 <pre><code>
-    /*
-    * Assigning role to an user
-    */
-    $user = Larbac\Models\User::find(20); // assuming user id is 20
-    $user-&gt;roles()-&gt;sync([5]); // Assigning user [id = 20] an Admin role [id = 5]
+/*
+* Assigning role to an user
+*/
+$user = Larbac\Models\User::find(20); // assuming user id is 20
+$user-&gt;roles()-&gt;sync([5]); // Assigning user [id = 20] an Admin role [id = 5]
 
 </code></pre>
 
