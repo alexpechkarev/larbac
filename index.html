@@ -1,38 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <title>Larbac by alexpechkarev</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Larbac by alexpechkarev</title>
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
-
-        <header>
-          <h1>Larbac</h1>
-          <h2>Role based access control package for Laravel 5</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/alexpechkarev/larbac/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/alexpechkarev/larbac/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/alexpechkarev/larbac" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1>
-<a id="larbac" class="anchor" href="#larbac" aria-hidden="true"><span class="octicon octicon-link"></span></a>LARBAC</h1>
+    <div class="wrapper">
+      <header>
+        <h1>Larbac</h1>
+        <p>Role based access control package for Laravel 5</p>
+        <p class="view"><a href="https://github.com/alexpechkarev/larbac">View the Project on GitHub <small>alexpechkarev/larbac</small></a></p>
+        <ul>
+          <li><a href="https://github.com/alexpechkarev/larbac/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/alexpechkarev/larbac/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/alexpechkarev/larbac">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="larbac" class="anchor" href="#larbac" aria-hidden="true"><span class="octicon octicon-link"></span></a>LaRBAC</h1>
 
 <p>Role based access control package for Laravel 5.</p>
 
@@ -48,7 +44,14 @@ Access decisions are based on the roles and permissions individual users have as
 <li>assign roles to users</li>
 </ul>
 
-<p>By default frontend option is set to <code>true</code>, if you wish to create roles and assign permissions in your own way simply turn this option off in configuration file of this package.</p>
+<p>By default frontend option is set to <code>true</code>, if you wish to create roles and assign permissions in your own way simply turn this option off in configuration file.</p>
+
+<h2>
+<a id="demonstration" class="anchor" href="#demonstration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demonstration</h2>
+
+<ul>
+<li><a href="http://larbac.ddns.net/"> Try demo</a></li>
+</ul>
 
 <h2>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
@@ -59,7 +62,7 @@ Access decisions are based on the roles and permissions individual users have as
 </ul>
 
 <h2>
-<a id="front-end-dependency" class="anchor" href="#front-end-dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Front-end dependency</h2>
+<a id="frontend-dependency" class="anchor" href="#frontend-dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frontend dependency</h2>
 
 <ul>
 <li>
@@ -78,24 +81,28 @@ Access decisions are based on the roles and permissions individual users have as
 
 <p>Update provider and aliases arrays in config/app.php with:</p>
 
-<pre><code>providers:
+<pre><code>'providers' =&gt; [
     ...
     'Illuminate\Html\HtmlServiceProvider',
     'Larbac\Provider\LarbacServiceProvider',
 
 
+'aliases' =&gt;[
+    ...
+    'Form'      =&gt; 'Illuminate\Html\FormFacade',
+    'HTML'      =&gt; 'Illuminate\Html\HtmlFacade'
+
+
 </code></pre>
 
-<p>Before executing migrations please review migration file located in Migration folder of this package.
-Four tables will be created with prefix tbl_ <code>[ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]</code>
-Publish package assets:</p>
+<p>Publish package assets: </p>
 
 <pre><code>    php artisan vendor:publish
 
 </code></pre>
 
-<p>Package extends default Laravel Authentication Model by defining table relations and validation methods. 
-Update config/auth.php</p>
+<p>Package extends default Laravel User Model by defining extra relations and validation methods. 
+Tell Laravel to use package User model instead of default Eloquent User model in <code>config/auth.php</code>:</p>
 
 <pre><code>    #'model' =&gt; 'App\User',
     'model'  =&gt; 'Larbac\Models\User',
@@ -109,47 +116,52 @@ Update config/auth.php</p>
 ];
 </code></pre>
 
-<h2>
-<a id="config" class="anchor" href="#config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Config</h2>
+<h4>
+<a id="create-database-tables" class="anchor" href="#create-database-tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create database tables</h4>
 
-<p>After publishing package assets configuration file will be located in </p>
-
-<pre><code>    config/larbac.php
-
-</code></pre>
-
-<h2>
-<a id="create-database-tables" class="anchor" href="#create-database-tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create database tables</h2>
-
-<p>Reviewing database table names in config file and change any if necessary, than run the migration: </p>
+<p>Before running migrations please review table names in migration folder <code>vendor/alexpechkarev/larbac/src/Migration</code> 
+Four additional tables required to store roles and permissions data along with their relations data. 
+By default following tables will be created <code>[ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]</code><br>
+Table names and table prefix can be specified in configuration file <code>config/larbac.php</code></p>
 
 <pre><code>    php artisan migrate
 
 </code></pre>
 
-<p>By default frontend interface set to <code>true</code>. These are default URL's:</p>
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
 
-<pre><code>    |   User interface can be accessed via          - http://yourdomain.net/user
-    |   Permission interface can be accessed via    - http://yourdomain.net/permission
-    |   Roles interface can be accessed via         - http://yourdomain.net/role
+<p>After publishing package assets configuration file can be found in <code>config/larbac.php</code></p>
 
-</code></pre>
+<p>By default frontend interface turned on, to turn this option off see configuration file. 
+Forntend interface URL's shown below, defined in configuration file and can be modified at any time.</p>
 
-<p>Routes defined in config file and can be modified at any time.</p>
+<pre><code>/*
+|---------------------------------------
+| Routes
+|---------------------------------------
+|
+| Setting default routes
+|
+|   User interface can be accessed via          - http://yourdomain.net/user
+|   Permission interface can be accessed via    - http://yourdomain.net/permission
+|   Roles interface can be accessed via         - http://yourdomain.net/role
+|
+*/
 
-<pre><code>    'routes' =&gt; [
+'routes' =&gt; [
 
-            'routeUser'       =&gt; 'user', 
-            'routePermission' =&gt; 'permission', 
-            'routeRoles'      =&gt; 'role' 
-        ],
+'routeUser'       =&gt; 'user', 
+'routePermission' =&gt; 'permission', 
+'routeRoles'      =&gt; 'role' 
+],
 
 </code></pre>
 
 <h3>
 <a id="frontend-interface" class="anchor" href="#frontend-interface" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frontend interface</h3>
 
-<p>To inject <code>javascript</code> dependency resources into interface templates make sure that default layout template <code>resources/views/app.blade.php</code> or your own template have following section: <code>@section('footer-js') ... @show</code>.</p>
+<p>Frontend templates depend on additional resources such as Bootstrap, jQuery and Dual List. To add this resource into templates please ensure that default layout template [in this case - resources/views/app.blade.php ] have following section: <code>@section('footer-js') ... @show</code> .  </p>
 
 <pre><code>        @section('footer-js')
     &lt;!-- Scripts --&gt;
@@ -159,12 +171,42 @@ Update config/auth.php</p>
 
 </code></pre>
 
+<p>Package templates will be using <code>@section('footer-js')</code> adding required javascript files.</p>
+
+<pre><code>
+@section('footer-js')
+@parent
+    // template required resources
+@stop
+
+</code></pre>
+
+<h3>
+<a id="error-messages" class="anchor" href="#error-messages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Error messages</h3>
+
+<p>In cases when user do not have sufficient permissions to access requested resource LaRBAC Middleware will use <code>withErrors()</code> method to flash errors. To show error messages create new view <code>larbac-error.blade.php</code> and include code below.  Than include this view in your templates <code>@include('larbac-error')</code>. Error messages can be specified in the configuration file.</p>
+
+<pre><code>
+        @if($errors-&gt;has("error"))        
+        &lt;div class="alert alert-warning alert-dismissible" role="alert"&gt;
+            &lt;button type="button" class="close" data-dismiss="alert"&gt;
+                &lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;span class="sr-only"&gt;Close&lt;/span&gt;
+            &lt;/button&gt;
+            {{$errors-&gt;first("error")}}
+        &lt;/div&gt;
+        @endif
+
+</code></pre>
+
 <h2>
 <a id="use" class="anchor" href="#use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use</h2>
 
-<p>After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be specified within your controller:</p>
+<p>After creating your permissions / roles, establishing relations between them and assigning roles to user, access restrictions can be set within your controller. </p>
 
-<pre><code>    public function __construct()
+<pre><code>use Illuminate\Support\Facades\Request;
+
+...
+    public function __construct()
     {
                 // Setting role based access
                 $permissions = ['role'=&gt;['Admin']  ];
@@ -208,7 +250,7 @@ Update config/auth.php</p>
 
 <ul>
 <li>user must be assigned to one of the given roles</li>
-<li>at least one role must have given permissions</li>
+<li>at least one role must have all given permissions</li>
 </ul>
 
 <pre><code>    $permissions = ['role'=&gt;['Admin', 'Staff'], 'permissions' =&gt; ['view', 'edit']  ];
@@ -250,43 +292,52 @@ Update config/auth.php</p>
 <h3>
 <a id="permissions" class="anchor" href="#permissions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Permissions</h3>
 
-<p>Create new permission: /permission/create  <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_create.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_create.png" alt=""></p>
+<p>Creating new permission: /permission/create</p>
 
-<p>View permissions: /permission   <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_view.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_view.png" alt=""></p>
+<p><img src="src/img/permission_create.png?raw=true" alt="Screenshot" title="Create new permission: http://mydomain.net/permission/create"></p>
 
-<p>Edit permission: /permission/1/edit/ <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_edit.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_edit.png" alt=""></p>
+<p>View permissions: /permission</p>
 
-<p>Delet permission: <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_delete.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/permission_delete.png" alt=""></p>
+<p><img src="src/img/permission_view.png?raw=true" alt="Screenshot" title="View roles: http://mydomain.net/permission"></p>
+
+<p>Edit permission: /permission/1/edit/</p>
+
+<p><img src="src/img/permission_edit.png?raw=true" alt="Screenshot" title="Edit permission: http://mydomain.net/permission/1/edit"></p>
+
+<p>Delet permission: </p>
+
+<p><img src="src/img/permission_delete.png?raw=true" alt="Screenshot" title="Delete permission"></p>
 
 <h3>
 <a id="roles" class="anchor" href="#roles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roles</h3>
 
-<p>Create new role and assign permission: /role/create  <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_create.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_create.png" alt=""></p>
+<p>Creating new role and assigning permission(s) to this role: /role/create</p>
 
-<p>View roles: /role <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_view.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_view.png" alt=""></p>
+<p><img src="src/img/role_create.png?raw=true" alt="Screenshot" title="Create new role: http://mydomain.net/role/create"></p>
 
-<p>Edit role: /role/1/edit/  <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_edit.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/role_edit.png" alt=""></p>
+<p>View roles: /role</p>
+
+<p><img src="src/img/role_view.png?raw=true" alt="Screenshot" title="View roles: http://mydomain.net/role"></p>
+
+<p>Edit role: /role/1/edit/</p>
+
+<p><img src="src/img/role_edit.png?raw=true" alt="Screenshot" title="Edit role: http://mydomain.net/role/1/edit"></p>
 
 <h3>
 <a id="users" class="anchor" href="#users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Users</h3>
 
-<p>View users: /user  <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/user_view.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/user_view.png" alt=""></p>
+<p>View users: /user</p>
 
-<p>Assign role to user: /user/1/edit/   <a href="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/user_assign.png">[ view image ]</a><br>
-<img src="https://raw.githubusercontent.com/alexpechkarev/larbac/master/src/img/user_assign.png" alt=""></p>
+<p><img src="src/img/user_view.png?raw=true" alt="Screenshot" title="View users: http://mydomain.net/user"></p>
+
+<p>Assign role to user: /user/1/edit/</p>
+
+<p><img src="src/img/user_assign.png?raw=true" alt="Screenshot" title="Assign role to user: http://mydomain.net/user/1/edit"></p>
 
 <h2>
 <a id="using-without-frontend" class="anchor" href="#using-without-frontend" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using without frontend</h2>
 
-<p>Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to those users.
+<p>Out of box Laravel comes with model and controllers that handles user registration and authentication process. Here we will create roles and permissions that can be applied to users.
 First create roles and permissions:</p>
 
 <pre><code>    /**
@@ -369,17 +420,17 @@ To keep in mind that <code>sync( [12,13,14] )</code> will remove any other permi
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p>Larbac for Laravel 5 is released under the MIT License. See the bundled
+<p>LaRBAC for Laravel 5 is released under the MIT License. See the bundled
 <a href="https://github.com/alexpechkarev/larbac/blob/master/LICENSE">LICENSE</a>
 file for details.</p>
-        </section>
-
-        <footer>
-          Larbac is maintained by <a href="https://github.com/alexpechkarev">alexpechkarev</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-                  <script type="text/javascript">
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/alexpechkarev">alexpechkarev</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -390,7 +441,5 @@ file for details.</p>
             } catch(err) {}
           </script>
 
-      </div>
-    </div>
   </body>
 </html>
