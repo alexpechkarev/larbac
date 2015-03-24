@@ -81,6 +81,41 @@ protected $routeMiddleware = [
 #### Create database tables
 
 Before running migrations please review table names in migration folder ``` vendor/alexpechkarev/larbac/src/Migration``` 
+
+
+If you plan using frontend interface open ```config/larbac.php```: 
+ - specify role name that will grant you access to the frontend interface
+ - specify user ID to which above role will be assigned
+
+```
+/*
+|--------------------------------------------------------------------------
+| User
+|--------------------------------------------------------------------------
+|
+| Specify a user id from users table to which you would like assigning Admin role
+| This is required in order to obtain access to frontend interface
+| Can be changed to any other user
+|
+*/
+
+'user' => 1, 
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin role
+|--------------------------------------------------------------------------
+|
+| Role that required in order to obtain access to frontend interface
+|
+*/
+
+'role' => 'Admin',       
+    
+
+```
+
 Four additional tables required to store roles and permissions data along with their relations data. 
 By default following tables will be created ```[ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]```          
 Table names and table prefix can be specified in configuration file ```config/larbac.php```
@@ -97,6 +132,7 @@ After publishing package assets configuration file can be found in ``` config/la
 
 By default frontend interface turned on, to turn this option off see configuration file. 
 Forntend interface URL's shown below, defined in configuration file and can be modified at any time.
+Access to these routes are protected by role, which assigned to user, see  ```config/larbac.php```
  
 ```
 /*
