@@ -70,11 +70,13 @@ Tell Laravel to use package User model instead of default Eloquent User model in
 
 Register package middleware with HTTP kernel route array
 
+```
 protected $routeMiddleware = [
          ...
         'larbac'  => 'Larbac\Middleware\LarbacMiddleware',
 ];
 
+```
 
 #### Create database tables
 
