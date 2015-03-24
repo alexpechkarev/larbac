@@ -123,6 +123,40 @@ protected $routeMiddleware = [
 <a id="create-database-tables" class="anchor" href="#create-database-tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create database tables</h4>
 
 <p>Before running migrations please review table names in migration folder <code>vendor/alexpechkarev/larbac/src/Migration</code> 
+
+If you plan using frontend interface open ```config/larbac.php```: 
+ - specify role name that will grant you access to the frontend interface
+ - specify user ID to which above role will be assigned
+
+<pre><code>
+/*
+|--------------------------------------------------------------------------
+| User
+|--------------------------------------------------------------------------
+|
+| Specify a user id from users table to which you would like assigning Admin role
+| This is required in order to obtain access to frontend interface
+| Can be changed to any other user
+|
+*/
+
+'user' => 1, 
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin role
+|--------------------------------------------------------------------------
+|
+| Role that required in order to obtain access to frontend interface
+|
+*/
+
+'role' => 'Admin',       
+    
+
+</code></pre>  
+
 Four additional tables required to store roles and permissions data along with their relations data. 
 By default following tables will be created <code>[ tbl_permissions, tbl_roles, tbl_role_user, tbl_permission_role ]</code><br>
 Table names and table prefix can be specified in configuration file <code>config/larbac.php</code></p>
@@ -137,7 +171,7 @@ Table names and table prefix can be specified in configuration file <code>config
 <p>After publishing package assets configuration file can be found in <code>config/larbac.php</code></p>
 
 <p>By default frontend interface turned on, to turn this option off see configuration file. 
-Forntend interface URL's shown below, defined in configuration file and can be modified at any time.</p>
+Forntend interface URL's shown below, defined in configuration file and can be modified at any time. Access to these routes are protected by role, which assigned to user, see config/larbac.php</p>
 
 <pre><code>/*
 |---------------------------------------
