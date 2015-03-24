@@ -41,6 +41,32 @@ return [
 
 	'frontend' => true,  
     
+    	/*
+	|--------------------------------------------------------------------------
+	| User
+	|--------------------------------------------------------------------------
+	|
+        | Specify a user id from users table to which you would like assigning Admin role
+        | This is required in order to obtain access to frontend interface
+        | Can be changed to any other user
+	|
+	*/
+
+	'user' => 1, 
+    
+    
+	/*
+	|--------------------------------------------------------------------------
+	| Admin role
+	|--------------------------------------------------------------------------
+	|
+        | Role that required to obtain access to frontend interface
+	|
+	*/
+
+	'role' => 'Admin',   
+      
+    
 	/*
 	|--------------------------------------------------------------------------
 	| Routes

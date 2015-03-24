@@ -82,6 +82,29 @@ class CreatePermissionTables extends Migration {
                $table->foreign('permission_id')->references('id')->on($tablePrefix.'permissions')->onDelete('cascade');
                $table->foreign('role_id')->references('id')->on($tablePrefix.'roles')->onDelete('cascade');
            });
+           
+           /**
+            * Create Admin role
+            */
+            $roleId = DB::table($tablePrefix.config('larbac.tables.roleTable'))->insertGetId(
+                            ['name' => 'Admin', 'description' => 'Default administrator role']
+                            ); 
+            
+            $user = User::find(config('larbac.user'));
+            
+            if( !empty($user)){
+                
+                /**
+                 * Assign Admin role to a user
+                 */
+                DB::table($tablePrefix.config('larbac.tables.roleToUserTable'))->insert(
+                        [
+                            ['user_id' => $user->id, 'role_id' => $roleId]
+                        ]
+                        );                  
+                
+            }
+            
 	}
 
 	/**
