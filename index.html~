@@ -115,7 +115,7 @@ Tell Laravel to use package User model instead of default Eloquent User model in
 <pre><code>
 protected $routeMiddleware = [
              ...
-    'larbac'  =&gt; 'Larbac\Middleware\LarbacMiddleware',
+    'larbac'  =&gt; 'Larbac\Middleware\LarbacMiddleware.php',
 ];
 </code></pre>
 
