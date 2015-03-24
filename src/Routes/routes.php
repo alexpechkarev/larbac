@@ -8,6 +8,7 @@
 | Package routes registered below, actual routes specified in config file.
 |
 */
+
 Route::group(['middleware' => 'larbac', 'larbac' => ['role'=>[config('larbac.role')] ],], function(){
     
 

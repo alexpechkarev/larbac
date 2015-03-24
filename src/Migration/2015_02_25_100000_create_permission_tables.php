@@ -92,6 +92,7 @@ class CreatePermissionTables extends Migration {
             
             $user = User::find(config('larbac.user'));
             
+            
             if( !empty($user)){
                 
                 /**
