@@ -1,7 +1,7 @@
 {
 	"name": "alexpechkarev/larbac",
 	"description": "Role based access control for Laravel 5",
-	"keywords": ["role based access control", "access controll", "permissions", "role permission", "access control with interface"],
+	"keywords": ["role based access control", "access controll", "rbac for laravel", "role permission", "rbac with interface"],
 	"license": "MIT",
         "authors": [
             {
@@ -22,7 +22,7 @@
         
     "extra": {
         "branch-alias": {
-            "dev-master": "1.2-dev"
+            "dev-master": "1.3-dev"
         }
     }
     
