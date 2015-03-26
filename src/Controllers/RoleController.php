@@ -20,6 +20,15 @@ class RoleController extends Controller{
      */
     public function __construct() {
       
+      // Setting role based access
+      $permissions = ['role'=>[config('larbac.role')]  ];
+
+
+      if( is_object(Request::route()) ) {
+
+          Request::route()->setParameter('larbac', $permissions);
+          $this->middleware('larbac');  
+      }         
     }
     /***/
 
